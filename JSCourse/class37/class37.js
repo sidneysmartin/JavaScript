@@ -2,7 +2,7 @@
 // https://www.w3schools.com/jsref/event_stoppropagation.asp
 
 /*
-O stopPropagation() método impede que a propagação do mesmo evento seja chamada.
+O stopPropagation()método impede que a propagação do mesmo evento seja chamada.
 
 Propagação significa borbulhar para elementos pais ou capturar elementos filhos.
 */
