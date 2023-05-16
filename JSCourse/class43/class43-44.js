@@ -11,6 +11,7 @@ const cursos = [
   "ReactNative",
 ];
 const btnCursoSelecionado = document.getElementById("btnCursoSelecionado");
+const btnRemoverCurso = document.querySelector("#btnRemoverCurso");
 
 cursos.map((el, chave) => {
   const novoElemento = document.createElement("div");
@@ -30,25 +31,31 @@ cursos.map((el, chave) => {
   caixaCursos.appendChild(novoElemento);
 });
 
-btnCursoSelecionado.addEventListener("click", (evt) => {
+const radioSelecionado = () => {
   const todosRadios = [...document.querySelectorAll("input[type=radio]")];
   let radioSelecionado = todosRadios.filter((ele, ind, arr) => {
     return ele.checked;
   });
 
-  radioSelecionado = radioSelecionado[0];
-  // const cursoSelecionado = radioSelecionado.parentNode.parentNode.firstChild.textContent
-  const cursoSelecionado =
-    radioSelecionado.parentNode.previousSibling.textContent;
-  alert("Curso selecionado: " + cursoSelecionado);
-  // console.log(todosRadios)
-  // console.log(radioSelecionado)
-  // console.log(cursoSelecionado)
+  return radioSelecionado[0];
+};
+
+btnCursoSelecionado.addEventListener("click", (evt) => {
+  const rs = radioSelecionado();
+  try {
+    const cursoSelecionado = rs.parentNode.previousSibling.textContent;
+    alert("Curso selecionado: " + cursoSelecionado);
+  } catch (err) {
+    alert("Selecione um curso.");
+  }
 });
-// informações que podem ser obtidas
-// parentNode
-// childNodes[nodeNumber]
-// firstChild
-// lastChild
-// nextSibling
-// previousSibling
+
+btnRemoverCurso.addEventListener("click", (evt) => {
+  const rs = radioSelecionado();
+  if (rs !== undefined) {
+    const cursoSelecionado = rs.parentNode.parentNode;
+    cursoSelecionado.remove();
+  } else {
+    alert("Selecione um curso.");
+  }
+});
