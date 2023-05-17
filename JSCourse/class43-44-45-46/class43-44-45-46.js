@@ -18,21 +18,34 @@ const btnRemoverCurso = document.querySelector("#btnRemoverCurso");
 
 let index = 0;
 
-const criarNovoCurso = (el, curso) => {
+const removeSelect = () => {
+  const cursosSelecionados = [...document.querySelectorAll(".selecionado")];
+  cursosSelecionados.map((el) => {
+    el.classList.remove("selecionado");
+  });
+};
+
+const criarNovoCurso = (curso) => {
   const novoElemento = document.createElement("div");
   novoElemento.setAttribute("id", "c" + index);
   novoElemento.setAttribute("class", "curso c1");
-  novoElemento.innerHTML = el;
+
+  novoElemento.innerHTML = curso;
 
   const comandos = document.createElement("div");
   comandos.setAttribute("class", "comandos");
 
-  const rb = document.createElement("input");
-  rb.setAttribute("type", "radio");
-  rb.setAttribute("name", "rb_curso");
+  // const rb = document.createElement("input");
+  // rb.setAttribute("type", "radio");
+  // rb.setAttribute("name", "rb_curso");
 
-  comandos.appendChild(rb);
-  novoElemento.appendChild(comandos);
+  // comandos.appendChild(rb);
+  // novoElemento.appendChild(comandos);
+
+  novoElemento.addEventListener("click", (evt) => {
+    removeSelect();
+    evt.target.classList.toggle("selecionado");
+  });
   return novoElemento;
 };
 
@@ -42,42 +55,34 @@ cursos.map((el, chave) => {
   index++;
 });
 
-const radioSelecionado = () => {
-  const todosRadios = [...document.querySelectorAll("input[type=radio]")];
-  let radioSelecionado = todosRadios.filter((ele, ind, arr) => {
-    return ele.checked;
-  });
+const cursoSelecionado = () => {
+  const cursoSelecionado = [...document.querySelectorAll(".selecionado")];
 
-  return radioSelecionado[0];
+  return cursoSelecionado[0];
 };
 
 btnCursoSelecionado.addEventListener("click", (evt) => {
-  const rs = radioSelecionado();
   try {
-    const cursoSelecionado = rs.parentNode.previousSibling.textContent;
-    alert("Curso selecionado: " + cursoSelecionado);
+    alert("Curso selecionado: " + cursoSelecionado().innerHTML);
   } catch (err) {
     alert("Selecione um curso.");
   }
 });
 
 btnRemoverCurso.addEventListener("click", (evt) => {
-  const rs = radioSelecionado();
-  if (rs !== undefined) {
-    const cursoSelecionado = rs.parentNode.parentNode;
-    cursoSelecionado.remove();
+  const curso = cursoSelecionado();
+  if (curso !== undefined) {
+    curso.remove();
   } else {
     alert("Selecione um curso.");
   }
 });
 
 previousCourse.addEventListener("click", (evt) => {
-  const rs = radioSelecionado();
   try {
     if (nomeCurso.value != "") {
-      const cursoSelecionado = rs.parentNode.parentNode;
       const novoCurso = criarNovoCurso(nomeCurso.value);
-      caixaCursos.insertBefore(novoCurso, cursoSelecionado);
+      caixaCursos.insertBefore(novoCurso, cursoSelecionado());
     } else {
       alert("Digite o nome do curso.");
     }
@@ -87,12 +92,10 @@ previousCourse.addEventListener("click", (evt) => {
 });
 
 nextCourse.addEventListener("click", (evt) => {
-  const rs = radioSelecionado();
   try {
     if (nomeCurso.value != "") {
-      const cursoSelecionado = rs.parentNode.parentNode;
       const novoCurso = criarNovoCurso(nomeCurso.value);
-      caixaCursos.insertBefore(novoCurso, cursoSelecionado.nextSibling);
+      caixaCursos.insertBefore(novoCurso, cursoSelecionado().nextSibling);
     } else {
       alert("Digite o nome do curso.");
     }
