@@ -23,6 +23,11 @@
   background-color: rgb(255,220,220) !important;
 }
 
+.vermelho{
+  border-color: rgb(120, 20, 20) !important;
+  background-color: rgb(255,220,220) !important;
+}
+
 button{
   width: 150px;
   height: 40px;
@@ -33,8 +38,3 @@ button{
   margin-top: 5px;
 }
 
-#caixa_pesquisar input{
-  padding: 10px;
-  border-radius: 5px;
-  width: 300px;
-}
